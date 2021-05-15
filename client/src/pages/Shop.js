@@ -9,7 +9,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {fetchBrands, fetchDevices, fetchTypes} from "../http/deviceAPI";
 import Pages from "../components/Pages";
-
+ 
 const Shop = observer(() => {
     const {device} = useContext(Context)
 
@@ -17,9 +17,11 @@ const Shop = observer(() => {
         fetchTypes().then(data => device.setTypes(data))
         fetchBrands().then(data => device.setBrands(data))
         fetchDevices(null, null, 1, 2).then(data => {
+            console.log(data)
             device.setDevices(data.rows)
             device.setTotalCount(data.count)
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -28,10 +30,11 @@ const Shop = observer(() => {
             device.setTotalCount(data.count)
         })
     }, [device.page, device.selectedType, device.selectedBrand,])
+    // }, [device])
 
     return (
         <Container>
-            <Row className="mt-2">
+             <Row className="mt-2">
                 <Col md={3}>
                     <TypeBar/>
                 </Col>

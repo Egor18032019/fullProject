@@ -1,4 +1,6 @@
-import {makeAutoObservable} from "mobx";
+import {
+    makeAutoObservable
+} from "mobx";
 
 export default class DeviceStore {
     constructor() {
@@ -10,6 +12,7 @@ export default class DeviceStore {
         this._page = 1
         this._totalCount = 0
         this._limit = 3
+        this._null = {}
         makeAutoObservable(this)
     }
 
@@ -22,14 +25,24 @@ export default class DeviceStore {
     setDevices(devices) {
         this._devices = devices
     }
-
     setSelectedType(type) {
         this.setPage(1)
-        this._selectedType = type
+        if (type.name === this._selectedType.name) {
+            this._selectedType = this._null
+        }
+        else {
+            this._selectedType = type
+        }
+
     }
     setSelectedBrand(brand) {
         this.setPage(1)
-        this._selectedBrand = brand
+        console.log(brand.name + " "+ brand.id)
+        if (brand.name === this._selectedBrand.name) {
+            this._selectedBrand= this._null
+        } else {
+            this._selectedBrand = brand
+        }
     }
     setPage(page) {
         this._page = page
