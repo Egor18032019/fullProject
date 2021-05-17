@@ -6,14 +6,16 @@ import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userAPI";
 import {Spinner} from "react-bootstrap";
- 
+import jwt_decode from "jwt-decode";
+
 const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         check().then(data => {
-            user.setUser(true)
+    // проверили и передали в данные пользовотеля
+            user.setUser(data)
             user.setIsAuth(true)
         }).finally(() => setLoading(false))
     }, [])

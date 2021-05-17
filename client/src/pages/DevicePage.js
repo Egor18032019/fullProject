@@ -3,17 +3,34 @@ import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import bigStar from '../assets/bigStar.png'
 import {useParams} from 'react-router-dom'
 import {fetchOneDevice} from "../http/deviceAPI";
+import {sentRating} from "../http/ratingApi";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 
 const DevicePage = observer(() => {
     const {basket} = useContext(Context)
+    const {user} = useContext(Context)
     const [device, setDevice] = useState({info: []})
     const {id} = useParams()
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const rating = () => {
+        // обернуть в трай катч ???
+      console.log("rating")
+      try{
+      const rate = {
+          userId:user.user.id,
+          deviseId:device.id,
+          rate:12
+        }
+      sentRating(rate)}
+      catch {
+          console.log(" как так то ?")
+      }
+    }
 
     return (
         <Container className="mt-3">
@@ -25,6 +42,7 @@ const DevicePage = observer(() => {
                     <Row className="d-flex flex-column align-items-center">
                         <h2>{device.name}</h2>
                         <div
+                        onClick={()=>rating()}
                             className="d-flex align-items-center justify-content-center"
                             style={{background: `url(${bigStar}) no-repeat center center`, width:240, height: 240, backgroundSize: 'cover', fontSize:64}}
                         >

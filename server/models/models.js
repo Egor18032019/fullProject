@@ -34,9 +34,11 @@ const Brand = sequelize.define('brand', {
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
 })
 
-const Rating = sequelize.define('rating', {
+const Rating = sequelize.define('ratings', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     rate: {type: DataTypes.INTEGER, allowNull: false},
+    deviceId: {type: DataTypes.INTEGER},
+    userId: {type: DataTypes.INTEGER, allowNull: false},
 })
 
 const DeviceInfo = sequelize.define('device_info', {
